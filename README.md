@@ -54,7 +54,20 @@ This lab models a three-floor hotel's network with eight departments. Dedicated 
 | `show interfaces trunk` on each switch | `Fa0/1` trunking with IEEE 802.1Q |
 | `show ip ssh` on F2/F3 | SSH version 2.0 enabled |
 
-These tests demonstrate routing and basic reachability. Client-to-client validation was reported during the lab but is not yet supported by saved test output. WAN failover has not yet been documented.
+These tests demonstrate routing and basic reachability. Client-to-client validation was reported during the lab but is not yet supported by saved test output. OSPF failover and subsequent route restoration were verified.
+
+## OSPF Failover and Recovery Test
+
+A controlled link failure was simulated on F1-Router by shutting down the direct F1–F3 serial interface `Serial0/2/0`.
+
+| Observation | Normal operation | After link failure | After restoration |
+|---|---|---|---|
+| Path to IT network | F1 → F3 | F1 → F2 → F3 | F1 → F3 |
+| Next hop | `10.10.10.6` | `10.10.10.10` | `10.10.10.6` |
+| OSPF cost | 65 | 129 | 65 |
+| ICMP to `192.168.1.1` | 5/5 successful | 5/5 successful | Not separately tested |
+
+During failure, the F1–F3 adjacency went from FULL to DOWN. The routing table moved to the alternate next hop, and traceroute showed `10.10.10.10` followed by `10.10.10.2`. After `no shutdown`, both F1 neighbors returned to FULL and the direct route was restored. The test demonstrates reachability after convergence, not measured zero downtime or convergence duration.
 
 ## Open the lab
 
@@ -73,7 +86,7 @@ show ip ssh
 
 ## Next improvements
 
-- Capture client-to-client ping/traceroute evidence and link-failure OSPF tests
+- Capture client-to-client ping/traceroute evidence and measure OSPF convergence time
 - Define inter-department ACLs, wireless security policies and DNS services
 - Restrict trunk allowed VLANs and document DHCP exclusions
 
