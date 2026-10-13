@@ -8,6 +8,10 @@ This lab models a three-floor hotel's network with eight departments. Dedicated 
 
 > **Educational simulation:** VLAN separation alone does not enforce traffic restrictions. ACLs, wireless security, and failover still require separate configuration and validation before claiming secure isolation or verified resilience.
 
+## Network topology
+
+![Cisco Packet Tracer topology showing three floors, eight VLANs and three interconnected routers](network-topology.png)
+
 ## Architecture
 
 - **Routers:** 3 Cisco 2911 (F1-Router, F2-Router, F3-Router)
@@ -54,7 +58,7 @@ These tests demonstrate routing and basic reachability. Client-to-client validat
 
 ## Open the lab
 
-Download and open [`packet-tracer/Hotel_Enterprise_Network.pkt`](packet-tracer/Hotel_Enterprise_Network.pkt) in Cisco Packet Tracer (add the `.pkt` file to that path if it is not yet present).
+Download and open [`Hotel_Enterprise_Network.pkt`](Hotel_Enterprise_Network.pkt) in Cisco Packet Tracer.
 
 Useful Cisco IOS commands:
 
